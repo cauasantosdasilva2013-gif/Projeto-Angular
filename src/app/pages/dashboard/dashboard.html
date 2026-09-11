@@ -1,0 +1,106 @@
+ <div class="contatodeHambuguer" ondblclick="abrirMenu()">
+
+            <input type="checkbox" id="menu-check" class="menu-check">
+            <label for="menu-check" class="icone-hambuguer">
+                <span class="linha"></span>
+                <span class="linha"></span>
+                <span class="linha"></span>
+            </label>
+
+            <nav class="menu">
+
+                <img src="../img/ford.png"  class="logo-menu" alt="logo">
+
+                <label for="menu-check" class="botaoFechar">&times;</label>
+
+
+                <a href="login">Login</a>
+                <a href="dashboard">Dashboard</a>
+                <a href="home">Home</a>
+            </nav>
+
+    </div>
+
+    <header class="cabecalho">
+
+        <h1>Dashboar FORD</h1>
+
+    </header>
+    
+
+    <main>
+
+        <section class="cartoes">
+
+            <div class="caixa">
+                <p>veiculos</p>
+                <select name="" id="" (change)="veiculoSelecionado($event)" >
+
+                    <option value="" hidden selected disabled>Escolha um modelo</option>
+                    <option *ngFor="let v of vehicles" [value]="v.id">
+                        {{ v.vehicle }}
+                    </option>
+
+
+                </select>
+            </div>
+
+            
+            <div class="total">
+                <span>Total vendas: </span>
+                <span>{{ selecionado?.volumetotal }}</span>
+                
+            </div>
+
+            <div class="conectado">
+               <span>Conecatos</span>
+               <span>{{ selecionado?.connected }}</span>
+            </div>
+
+            <div class="update">
+               <span>Software update</span>
+               <span>{{ selecionado?.softwareUpdates}}</span>
+               
+            </div>
+
+        </section>
+
+        <div class="car">
+            <img *ngIf="selecionado" [src]="selecionado.img" {alt}="selecionado.vehicle">
+        </div>
+
+
+    </main>
+    <footer class="rodape-veiculo">
+
+    <table class="tabela-veiculos">
+        <thead>
+            <tr>
+                <th colspan="6">
+                    <input type="text" class="busca-codigo" placeholder="Buscar por código do veículo (VIN)">
+                </th>
+            </tr>
+            <tr>
+                <th>Código - Vin:</th>
+                <th>Odômetro:</th>
+                <th>Nível de Combustível:</th>
+                <th>Status:</th>
+                <th>Lat:</th>
+                <th>Long:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2FRHDUYS2Y63NHD22454</td>
+                <td>3000 Km</td>
+                <td>90 %</td>
+                <td>on</td>
+                <td>-12.2002</td>
+                <td>-85.2014</td>
+            </tr>
+        </tbody>
+    </table>
+
+</footer>
+
+
