@@ -1,106 +1,189 @@
- <div class="contatodeHambuguer" ondblclick="abrirMenu()">
-
-            <input type="checkbox" id="menu-check" class="menu-check">
-            <label for="menu-check" class="icone-hambuguer">
-                <span class="linha"></span>
-                <span class="linha"></span>
-                <span class="linha"></span>
-            </label>
-
-            <nav class="menu">
-
-                <img src="../img/ford.png"  class="logo-menu" alt="logo">
-
-                <label for="menu-check" class="botaoFechar">&times;</label>
+<div class="contatodeHambuguer">
 
 
-                <a href="login">Login</a>
-                <a href="dashboard">Dashboard</a>
-                <a href="home">Home</a>
-            </nav>
+    <input type="checkbox" id="menu-check" class="menu-check">
 
-    </div>
-
-    <header class="cabecalho">
-
-        <h1>Dashboar FORD</h1>
-
-    </header>
-    
-
-    <main>
-
-        <section class="cartoes">
-
-            <div class="caixa">
-                <p>veiculos</p>
-                <select name="" id="" (change)="veiculoSelecionado($event)" >
-
-                    <option value="" hidden selected disabled>Escolha um modelo</option>
-                    <option *ngFor="let v of vehicles" [value]="v.id">
-                        {{ v.vehicle }}
-                    </option>
+    <label for="menu-check" class="icone-hambuguer">
+        <span class="linha"></span>
+        <span class="linha"></span>
+        <span class="linha"></span>
+    </label>
 
 
-                </select>
-            </div>
+    <nav class="menu">
 
-            
-            <div class="total">
-                <span>Total vendas: </span>
-                <span>{{ selecionado?.volumetotal }}</span>
-                
-            </div>
+        <img src="../img/ford.png" class="logo-menu" alt="Logo da Ford">
 
-            <div class="conectado">
-               <span>Conecatos</span>
-               <span>{{ selecionado?.connected }}</span>
-            </div>
+        <label for="menu-check" class="botaoFechar">
+            &times;
+        </label>
 
-            <div class="update">
-               <span>Software update</span>
-               <span>{{ selecionado?.softwareUpdates}}</span>
-               
-            </div>
+        <a href="login">Login</a>
+        <a href="dashboard">Dashboard</a>
+        <a href="home">Home</a>
+        <a href="javascript:void(0)" (click)="logout()">Sair</a>
 
-        </section>
+    </nav>
 
-        <div class="car">
-            <img *ngIf="selecionado" [src]="selecionado.img" {alt}="selecionado.vehicle">
+</div>
+
+<header class="cabecalho">
+
+    <h1>Dashboard FORD</h1>
+
+
+</header>
+
+<main>
+
+
+    <section class="cartoes">
+
+        <!-- VEÍCULOS -->
+        <div class="caixa">
+
+            <p>Veículos</p>
+
+            <select name="veiculo" id="veiculo" (change)="veiculoSelecionado($event)">
+
+                <option value="" hidden selected disabled>
+                    Escolha um modelo
+                </option>
+
+                <option *ngFor="let v of vehicles" [value]="v.id">
+                    {{ v.vehicle }}
+                </option>
+
+            </select>
+
         </div>
 
 
-    </main>
-    <footer class="rodape-veiculo">
+        <!-- TOTAL DE VENDAS -->
+        <div class="total">
 
-    <table class="tabela-veiculos">
-        <thead>
-            <tr>
-                <th colspan="6">
-                    <input type="text" class="busca-codigo" placeholder="Buscar por código do veículo (VIN)">
-                </th>
-            </tr>
-            <tr>
-                <th>Código - Vin:</th>
-                <th>Odômetro:</th>
-                <th>Nível de Combustível:</th>
-                <th>Status:</th>
-                <th>Lat:</th>
-                <th>Long:</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>2FRHDUYS2Y63NHD22454</td>
-                <td>3000 Km</td>
-                <td>90 %</td>
-                <td>on</td>
-                <td>-12.2002</td>
-                <td>-85.2014</td>
-            </tr>
-        </tbody>
-    </table>
+            <span>Total vendas:</span>
+
+            <strong>
+                {{ selecionado?.volumetotal }}
+            </strong>
+
+        </div>
+
+
+        <!-- CONECTADOS -->
+        <div class="conectado">
+
+            <span>Conectados</span>
+
+            <strong>
+                {{ selecionado?.connected }}
+            </strong>
+
+        </div>
+
+
+        <!-- SOFTWARE UPDATE -->
+        <div class="update">
+
+            <span>Software update</span>
+
+            <strong>
+                {{ selecionado?.softwareUpdates }}
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- IMAGEM DO VEÍCULO -->
+    <div class="car">
+
+        <img *ngIf="selecionado" [src]="selecionado.img" [alt]="selecionado.vehicle">
+
+    </div>
+
+
+</main>
+
+<footer class="rodape-veiculo">
+
+
+    <div class="tabela-container">
+
+        <table class="tabela-veiculos">
+
+            <thead>
+
+                <tr>
+
+                    <th colspan="6">
+
+                        <input type="text" class="busca-codigo" placeholder="Buscar por código do veículo (VIN)"
+                            (input)="buscarPorCodigo($any($event.target).value)">
+
+                    </th>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>Código - VIN:</th>
+                    <th>Odômetro:</th>
+                    <th>Nível de Combustível:</th>
+                    <th>Status:</th>
+                    <th>Lat:</th>
+                    <th>Long:</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr *ngIf="vehicleData">
+
+                    <td>{{ vehicleData.vin }}</td>
+
+                    <td>
+                        {{ vehicleData.odometro }} Km
+                    </td>
+
+                    <td>
+                        {{ vehicleData.nivelCombustivel }} %
+                    </td>
+
+                    <td>
+                        {{ vehicleData.status }}
+                    </td>
+
+                    <td>
+                        {{ vehicleData.lat }}
+                    </td>
+
+                    <td>
+                        {{ vehicleData.long }}
+                    </td>
+
+                </tr>
+
+
+                <tr *ngIf="!vehicleData">
+
+                    <td colspan="6">
+                        {{ mensagemBusca || 'Digite o código VIN completo para buscar' }}
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+    
 
 </footer>
-
-
